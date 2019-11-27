@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" type ="text/css" href="{% static 'polls/style.css' %}">
+
+<div class="main">
+    {% if company_list %}
+        <ul>
+            {% for company in company_list %}
+                <li><a href="{{ company.id }}">{{company.name}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Empty</p>
+    {% endif %}
+</div>
