@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from .models import *
+from .forms import *
+from django.views.generic import(
+    FormView, CreateView
+)
 
 # Create your views here.
 
@@ -18,3 +22,9 @@ def detail(request, id):
         'company': company
     }
     return render(request, 'polls/detail.html', context)
+
+
+class CreateWorker(CreateView):
+    model = Worker
+    field = ['name']
+    
