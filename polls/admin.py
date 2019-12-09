@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import *
+from .models import (
+    Company, Manager, Work, Worker,
+    WorkPlace, WorkTime
+)
 
 # Register your models here.
 

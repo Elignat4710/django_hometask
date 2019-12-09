@@ -41,10 +41,12 @@ class Work(models.Model):
 
 class WorkPlace(models.Model):
     name = models.CharField(max_length=200)
-    worker_name = models.OneToOneField(Worker, on_delete=models.CASCADE, primary_key=True)
+    worker_name = models.OneToOneField(
+        Worker, on_delete=models.CASCADE, primary_key=True
+        )
     work_name = models.ForeignKey(Work, on_delete=models.CASCADE)
     choice = [
-        (NEW, 'New'), 
+        (NEW, 'New'),
         (APPROVED, 'Approved'),
         (CANCELLED, 'Cancelled'),
         (FINISHED, 'Finished'),
@@ -59,8 +61,10 @@ class WorkTime(models.Model):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     choice = [
-        (NEW, 'New'), 
+        (NEW, 'New'),
         (APPROVED, 'Approved'),
         (CANCELLED, 'Cancelled'),
         ]
-    status = models.IntegerField(choices=choice)
+    status = models.IntegerField(choices=choice, default=NEW)
+    worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
+    work = models.ForeignKey(Work, on_delete=models.CASCADE)
