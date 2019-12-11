@@ -40,7 +40,7 @@ class CompanyDetailViewtest(TestCase):
         self.company = Company.objects.create(
             name='company_1'
         )
-    
+
     def test_company_detail(self):
         response = self.client.get(reverse(
             'company_details',
@@ -64,7 +64,7 @@ class WorkCreateViewTest(TestCase):
             'com_name': self.company.id
         }
         url = reverse('work_create', kwargs={'pk': self.company.id})
-        response = self.client.post(url, work_dict)
+        self.client.post(url, work_dict)
         work = Work.objects.last()
         self.assertEqual(work.name, 'work_1')
 
@@ -125,5 +125,5 @@ class AssignWorkerViewTest(TestCase):
             'company_id': self.company.id,
             'work_id': self.work.id
         })
-        response = self.client.post(url, data_dict)
+        self.client.post(url, data_dict)
         self.assertIsNotNone(WorkPlace.objects.all())
