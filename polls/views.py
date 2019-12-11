@@ -9,6 +9,10 @@ from django.views.generic import (
     CreateView, ListView, DetailView
 )
 from django.urls import reverse_lazy
+import logging
+
+
+logger = logging.getLogger('sentry_logger')
 
 
 class CompanyList(ListView):
@@ -63,10 +67,18 @@ class WorktimeCreate(CreateView):
         worker = get_object_or_404(Worker, id=self.kwargs.get('pk'))
         return {'worker': worker}
 
+    def form_valid(self, form):
+        form.save()
+        data = self.request.POST
+        logger.debug(
+            'start: %s, end: %s, worker: %s, status:%s',
+            data['date_start'], data['date_end'], data['worker'],
+            data['status'])
+        logger.info('worktime create')
+        return super().form_valid(form)
+
 
 class WorkCreate(CreateView):
-    # model = Work
-    # fields = ['name', 'com_name']
     template_name = 'polls/create_work.html'
     form_class = WorkCreate
 
@@ -75,8 +87,21 @@ class WorkCreate(CreateView):
         return reverse_lazy('company_details', kwargs={'pk': company_id})
 
     def get_initial(self):
-        company = get_object_or_404(Company, id=self.kwargs.get('pk'))
-        return {'com_name': company}
+        self.company = get_object_or_404(Company, id=self.kwargs.get('pk'))
+        return {'com_name': self.company}
+
+    def form_valid(self, form):
+        form.save()
+        data = self.request.POST
+        # print(data)
+        logger.debug(
+            'name work: %s, company name: %s',
+            data['name'], data['com_name']
+        )
+        logger.info('create work')
+        return super().form_valid(form)
+
+    
 
 
 class AssignWorker(CreateView):
@@ -90,3 +115,11 @@ class AssignWorker(CreateView):
     def get_success_url(self):
         company_id = self.kwargs.get('company_id')
         return reverse_lazy('company_details', kwargs={'pk': company_id})
+
+    def form_valid(self, form):
+        form.save()
+        data = self.request.POST
+        logger.debug('worker: %s, work:%s',
+                    data['worker_name'], data['work_name'])
+        logger.info('assign worker')
+        return super().form_valid(form)
