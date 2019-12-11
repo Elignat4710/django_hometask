@@ -62,7 +62,9 @@ class WorkCreateViewTest(TestCase):
             'com_name': self.company
         }
         response = self.client.post('work_create', work_dict, kwargs={'pk': self.company.id})
+        # print(response.text)
+        print(response.context)
         print(response.status_code)
-        work = Work.objects.all()
+        work = Work.objects.last()
         # print(work)
-        self.assertEqual(work.name, 'work')
+        self.assertEqual(work.name, 'work_1')
