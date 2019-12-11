@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TransactionTestCase
 from ..models import (
     Company, Manager, Worker, Work,
     WorkPlace, NEW, WorkTime
@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 
-class CompanyModelTest(TestCase):
+class CompanyModelTest(TransactionTestCase):
     def setUp(self):
         self.company = Company.objects.create(name='company1')
 
@@ -16,7 +16,7 @@ class CompanyModelTest(TestCase):
         self.assertTrue(self.company.name, 'company1')
 
 
-class ManagerModelTest(TestCase):
+class ManagerModelTest(TransactionTestCase):
     def setUp(self):
         self.company = Company.objects.create(
             name='company_1'
@@ -31,7 +31,7 @@ class ManagerModelTest(TestCase):
         self.assertTrue(self.manager.name, 'manage_1')
 
 
-class WorkerModelTest(TestCase):
+class WorkerModelTest(TransactionTestCase):
     def setUp(self):
         self.worker = Worker.objects.create(name='worker_1')
 
@@ -46,7 +46,7 @@ class WorkerModelTest(TestCase):
         self.assertEqual(response.context['worker'], self.worker)
 
 
-class WorkModeltest(TestCase):
+class WorkModeltest(TransactionTestCase):
     def setUp(self):
         self.company = Company.objects.create(
             name='company_1'
@@ -61,7 +61,7 @@ class WorkModeltest(TestCase):
         self.assertTrue(self.work.com_name, 'company_1')
 
 
-class WorkPlaceModelTest(TestCase):
+class WorkPlaceModelTest(TransactionTestCase):
     def setUp(self):
         self.company = Company.objects.create(
             name='company_1'
@@ -83,7 +83,7 @@ class WorkPlaceModelTest(TestCase):
         self.assertEqual(self.workplace.status, NEW)
 
 
-class WorkTimeModelTest(TestCase):
+class WorkTimeModelTest(TransactionTestCase):
     def setUp(self):
         self.company = Company.objects.create(
             name='company_1'
