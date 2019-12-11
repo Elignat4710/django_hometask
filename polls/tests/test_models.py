@@ -80,7 +80,7 @@ class WorkPlaceModelTest(TestCase):
     def test_workplace(self):
         self.assertIsNotNone(self.workplace.pk)
         self.assertEqual(self.workplace.worker_name, self.worker)
-        self.assertTrue(self.workplace.status, NEW)
+        self.assertEqual(self.workplace.status, NEW)
 
 
 class WorkTimeModelTest(TestCase):
