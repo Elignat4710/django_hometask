@@ -13,7 +13,7 @@ class CompanyModelTest(TransactionTestCase):
 
     def test_company(self):
         self.assertIsNotNone(self.company.id)
-        self.assertTrue(self.company.name, 'company1')
+        self.assertEqual(self.company.name, 'company1')
 
 
 class ManagerModelTest(TransactionTestCase):
@@ -27,8 +27,8 @@ class ManagerModelTest(TransactionTestCase):
 
     def test_manager(self):
         self.assertIsNotNone(self.manager.id)
-        self.assertTrue(self.manager.com_name, 'company_1')
-        self.assertTrue(self.manager.name, 'manage_1')
+        self.assertEqual(self.manager.com_name, 'company_1')
+        self.assertEqual(self.manager.name, 'manage_1')
 
 
 class WorkerModelTest(TransactionTestCase):
@@ -37,7 +37,7 @@ class WorkerModelTest(TransactionTestCase):
 
     def test_worker(self):
         self.assertIsNotNone(self.worker.id)
-        self.assertTrue(self.worker.name, 'worker_1')
+        self.assertEqual(self.worker.name, 'worker_1')
 
     def test_context_worker(self):
         response = self.client.get(
@@ -57,8 +57,8 @@ class WorkModeltest(TransactionTestCase):
 
     def test_work(self):
         self.assertIsNotNone(self.work)
-        self.assertTrue(self.work.name, 'work_1')
-        self.assertTrue(self.work.com_name, 'company_1')
+        self.assertEqual(self.work.name, 'work_1')
+        self.assertEqual(self.work.com_name, 'company_1')
 
 
 class WorkPlaceModelTest(TransactionTestCase):
